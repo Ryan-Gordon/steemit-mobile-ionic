@@ -1,0 +1,72 @@
+<ion-header >
+  <ion-navbar primary>
+    <ion-title>
+      About
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="about">
+<!--
+  <ion-list>
+    <ion-item *ngFor="let p of postsArray" ><!--*ngFor="key of postsArray"
+     
+      <h2>{{p.author}} {{p.title}}</h2>
+     
+    </ion-item>
+
+  </ion-list>
+
+-->
+<ion-list *ngFor="let post of postsArray">
+   <ion-card >
+<!--     <ion-item>
+      <ion-avatar item-left>
+        <img src="img/marty-avatar.png">
+      </ion-avatar
+      <h2>{{post.subreddit}}</h2>
+      <p>November 5, 1955</p>
+    </ion-item> -->
+
+    <ion-card-content>
+      <ion-card-title>
+        <h2>{{post.title}}</h2>
+
+        <ion-nav-buttons>
+            
+        </ion-nav-buttons>
+        </ion-card-title>
+     <img  src="{{post.imgUrl}}"/>
+    <!--   <p>
+        The most popular industrial group ever, and largely
+        responsible for bringing the music to a mass audience.
+      </p> -->
+    </ion-card-content>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button steemlightBlue clear small>
+          <ion-icon name="person"></ion-icon>
+          <div>{{post.author}}</div>
+        </button>
+      </ion-col>
+      <ion-col centre>
+        <button steemdarkBlue  clear small>
+          <ion-icon name="arrow-round-up"></ion-icon>
+         {{post.votes}}
+        </button>
+      </ion-col>
+      <ion-col>
+        <button steemlightBlue clear small >
+          {{post.repliesLength}} Replies
+          <ion-icon name="text"></ion-icon>
+        
+        </button>
+      </ion-col>
+      
+    </ion-row>
+
+
+  </ion-card>
+</ion-list>
+</ion-content>
