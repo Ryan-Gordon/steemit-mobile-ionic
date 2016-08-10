@@ -13,7 +13,7 @@ export class AboutPage {
    public arrayIndex: any;
   constructor(private navCtrl: NavController,public trendingPosts: SteemTrendingService) {
     this.postsArray = [];
-   
+
     this.loadPeople();
   }
 
@@ -22,38 +22,46 @@ export class AboutPage {
   .then(data => {
     this.posts = data;
     //console.log(JSON.stringify(this.posts));
-
+    this.arrayIndex = 0;
     for (var key in data) {
-      this.arrayIndex = 0;       
+
       console.log(key + " -> " + data[key]);
       console.log("Post: Author -> " + data[key].author);
       console.log("Post: title -> " + JSON.stringify(data[key].root_title));
       console.log("Post: Votes -> " + JSON.stringify(data[key].net_votes));
       console.log("Post: url -> " + JSON.stringify(data[key].url));
+      console.log("Post: url -> "+JSON.stringify(data[key].json_metadata));
+      console.log("Post: url -> "+JSON.stringify(data[key].total_pending_payout_value));
 
-    
-                  
+      var string1='"image/"';
+
+
+
+      //data[key].json_metadata.resolve;
+      this.arrayIndex++;
+
+
       this.postsArray.push({
           key: key,
           author: data[key].author,
           title: data[key].root_title,
-          votes: JSON.stringify(data[key].net_votes),
+          votes: data[key].net_votes,
           url:JSON.stringify(data[key].url),
           repliesLength: data[key].replies.length,
           replies: data[key].replies.length,
           created: data[key].created,
-          imgUrl: data[key].json_metadata.image
-         
+          earned: data[key].total_pending_payout_value
+
       } );
-      console.log("\n\n\n\nImage :",JSON.stringify(this.postsArray));
+    //  console.log("\n\n\n\nImage :",JSON.stringify(this.postsArray[1].imgUrl));
       console.log("Pushed post data into array");
-      this.arrayIndex++;
-                
+
+
                 }
 
 
-    
+
   });
 
- 
+
 }}
