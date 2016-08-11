@@ -19,6 +19,7 @@ export class PostDetailPage {
   private replies;
   private url;
   private body;
+  private imageUrl;
 
   constructor(private navCtrl: NavController, private navParams: NavParams) {
     this.title = this.navParams.get('post').title;
@@ -28,6 +29,7 @@ export class PostDetailPage {
     this.url = this.navParams.get('post').url;
     this.replies = this.navParams.get('post').replies;
     this.votes = this.navParams.get('post').votes;
+    this.imageUrl = this.navParams.get('post').imgUrl;
 
     console.log("\n\n\nReceived these items: ");
     console.log("\n\n Title:"+this.title+" \n\nAuthor: "+this.author+"  \n\nUrl: "+this.url);

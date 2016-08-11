@@ -33,7 +33,9 @@
 
         </ion-nav-buttons>
         </ion-card-title>
-     <img  src="{{post.imgUrl}}"/>
+      <div class="imageContainer">
+     <img *ngIf="post.imgUrl" src="{{post.imgUrl}}"/>
+      </div>
     </ion-card-content>
     <!--   <p>
         The most popular industrial group ever, and largely
