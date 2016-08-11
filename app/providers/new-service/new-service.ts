@@ -14,14 +14,40 @@ export class NewService {
   queryUrl:any;
   created : any;
 
+  apiCallCounter: number;
+  apiCallQuery: string;
+
 
   constructor(private http: Http) {
-    //this.load();
+    this.apiCallCounter = 0;
+    this.load();
   }
   load() {
-    this.queryUrl = "https://api.steemjs.com/getState?path=/created&scope=content";
-
     // don't have the data yet
+    switch(this.apiCallCounter){
+      case 1:
+        this.apiCallQuery = "created/steemit";
+        break;
+      case 2:
+        this.apiCallQuery = "created/introduceyourself";
+        break;
+
+      case 3:
+        this.apiCallQuery = "created/meme";
+        console.log("Leaving life counter set to "+this.apiCallCounter)
+        break;
+
+      case 4:
+        this.apiCallQuery = "created/science";
+        this.apiCallCounter = 0;
+        console.log("Leaving life counter set to "+this.apiCallCounter)
+        break;
+
+      default:
+        this.apiCallQuery = "created";
+
+    }//end swtich statement
+    this.queryUrl = 'https://api.steemjs.com/getState?path=/'+this.apiCallQuery+'&scope=content';
     console.log("Starting Promise");
     return new Promise(resolve => {
       // We're using Angular HTTP provider to request the data,
@@ -39,7 +65,8 @@ export class NewService {
           //console.log(JSON.stringify(this.data));
           resolve(this.data);
           console.log(this.data);
-          console.log("Leaving the service \n\n with this "+JSON.stringify(this.data));
+          this.apiCallCounter++;
+          console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+this.apiCallCounter+"\n\n Query URL :"+this.queryUrl);
         });
     });
 

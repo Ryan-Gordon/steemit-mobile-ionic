@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {SteemTrendingService} from '../../providers/steem-trending-service/steem-trending-service';
 import {PostDetailPage} from '../../pages/post-detail/post-detail';
-import {isUndefined} from "ionic-angular/util/util";
 
 
 @Component({
@@ -10,15 +9,12 @@ import {isUndefined} from "ionic-angular/util/util";
   providers: [SteemTrendingService]
 })
 export class AboutPage {
-   public posts: any;
-   public arr:any;
-   public postsArray: any;
-   public arrayIndex: any;
-  public imagesArray: string[];
+   private posts: any;
+   private postsArray: any;
   constructor(private navCtrl: NavController,public trendingPosts: SteemTrendingService) {
     this.postsArray = [];
 
-    this.loadPeople();
+    this.loadTrendingPosts();
   }
   viewPost(post){
     this.navCtrl.push(PostDetailPage, {
@@ -26,33 +22,39 @@ export class AboutPage {
     });
   }
 
-  loadPeople(){
+  loadTrendingPosts(){
+
+    //optional feature
+    // on second or nth call
+    //this.postsArray.splice(0,this.postsArray.length);
+    //clear entire array of posts and fill again
+    // can be done on every nth refresh or every refresh
+
+    this.postsArray.splice(0,(this.postsArray.length));
   this.trendingPosts.load()
   .then(data => {
     this.posts = data;
-    //console.log(JSON.stringify(this.posts));
-    this.arrayIndex = 0;
+
     for (var key in data) {
       //parsing the nested json object
       //we do this to extract the image property as directly accessing proved cumbersome
 
       var imageKey = JSON.parse(data[key].json_metadata);
-
-      console.log(imageKey);
-      console.log("Image "+imageKey.image);
-      var imageString;
-      imageString = imageKey.image+' ,';
+      var imageString = imageKey.image+' ,';
       var imageArray = [];
 
       imageArray = imageString.split(",");
 
       var thumbnail:string;
+      //here we begin checking for possible errors
+      //if we got an undefined result we will want to change that to null so it does not show
+      //some png have issues being loaded, we will try to replace these with a second or third provided photo if available
       if (typeof imageArray[1] === "undefined"){
         thumbnail = imageString;
-        console.log("Found an undefined\n\n\n\n\n");
+        console.log("Array returned an undefined");
         if (typeof imageKey.image === "undefined"){
 
-          console.log("still undefined \n\n\n");
+          console.log("the image returned undefined, setting to null");
           thumbnail = null;
         }
 
@@ -66,8 +68,13 @@ export class AboutPage {
           thumbnail= imageArray[2];
 
         }
-      }
+        else if (thumbnail.startsWith("https://lh3.googleusercontent.com")) {
+          //do this
+          thumbnail = null;
+        }
+      }//end image formatting
 
+      /*
 
       console.log(key + " -> " + data[key]);
       console.log("Post: Author -> " + data[key].author);
@@ -79,15 +86,9 @@ export class AboutPage {
       console.log("Image 1 (if any): "+ imageArray[1]);
       console.log("Image 2 (if any): "+imageArray[2]);
       console.log("Image 3 (if any): "+imageArray[3]);
-
-
-
-
-      //data[key].json_metadata.resolve;
-      this.arrayIndex++;
-
-
-      this.postsArray.push({
+      */
+      //I am using unshift here to place new items to the front of the array
+      this.postsArray.unshift({
           key: key,
           author: data[key].author,
           title: data[key].root_title,
@@ -98,17 +99,16 @@ export class AboutPage {
           created: data[key].created,
           earned: data[key].total_pending_payout_value,
           imgUrl: thumbnail,
-          body: data[key].body
+          body: data[key].body,
+          comments: data[key].children,
+          commentsContent: data[key].replies
 
       } );
       console.log("Pushed post data into array");
-
-
-                }
+    }//end iteration of data
 
 
 
-  });
-
-
-}}
+  });//end .then call
+  }//end loadTrendingPosts()
+}//end component

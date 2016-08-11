@@ -4,7 +4,7 @@
       About
     </ion-title>
     <ion-buttons end>
-    <button (click)="loadPeople()" >
+    <button (click)="loadTrendingPosts()" >
       <ion-icon name="refresh"></ion-icon>
       refresh
     </button>
@@ -15,14 +15,9 @@
 <ion-content padding class="about">
 
 
-   <ion-card full-card *ngFor="let post of postsArray" (click)="viewPost(post)">
-<!--     <ion-item>
-      <ion-avatar item-left>
-        <img src="img/marty-avatar.png">
-      </ion-avatar
-      <h2>{{post.subreddit}}</h2>
-      <p>November 5, 1955</p>
-    </ion-item> -->
+
+   <ion-card *ngFor="let post of postsArray"  (click)="viewPost(post)"> <!--*ngFor="let post of postsArray" *virtualItem="#item"  -->
+
 
     <ion-card-content>
       <ion-card-title>
@@ -33,56 +28,36 @@
 
         </ion-nav-buttons>
         </ion-card-title>
-      <div class="imageContainer">
      <img *ngIf="post.imgUrl" src="{{post.imgUrl}}"/>
-      </div>
+
     </ion-card-content>
-    <!--   <p>
-        The most popular industrial group ever, and largely
-        responsible for bringing the music to a mass audience.
-      </p> -->
-<!--
-  <button clear>
-    <ion-icon name="person"></ion-icon>
-    {{post.author}}
-  </button>
-<ion-buttons centre>
-  <button  clear>
-    <ion-icon name="arrow-round-up"></ion-icon>
-    {{post.votes}}
-  </button>
-</ion-buttons>
-      <ion-buttons>
 
-  <button end clear >
-    {{post.earned}}
-    <ion-icon name="cash"></ion-icon>
-
-  </button>
-
-</ion-buttons>
-      -->
-      <ion-row no-padding>
+      <ion-row >
+        <!--Shows the net earned payout for this post-->
         <ion-col>
-          <button clear smaller danger>
+          <button primary clear small >
             <ion-icon name='cash'></ion-icon>
             {{post.earned}}
           </button>
 
         </ion-col>
-        <ion-col text-center>
-          <button clear smaller danger>
+
+        <!--Contains the votes and comments icons-->
+        <!--to add: comments page view triggered by pressing the chat box-->
+        <ion-col end>
+          <button primary clear small >
             <ion-icon name='arrow-up'></ion-icon>
             {{post.votes}}
           </button>
-        </ion-col>
-        <ion-col text-right>
+          <!--Comments -->
+          <button primary clear small >
+            <ion-icon name='chatboxes'></ion-icon>
+            {{post.comments}}
+          </button>
 
         </ion-col>
+        <!-- end buttons -->
       </ion-row>
-
-
   </ion-card>
-
-
+  <!-- end card -->
 </ion-content>

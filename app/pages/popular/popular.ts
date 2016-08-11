@@ -1,41 +1,38 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {PostDetailPage} from '../../pages/post-detail/post-detail';
-import {NewService} from '../../providers/new-service/new-service';
 
-
+import {PopularService} from '../../providers/popular-service/popular-service';
+import {PostDetailPage} from '../../pages/post-detail/post-detail'
 
 /*
-  Generated class for the NewPage page.
+  Generated class for the PopularPage page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/new/new.html',
-  providers: [NewService]
+  templateUrl: 'build/pages/popular/popular.html',
+  providers: [PopularService]
 })
-export class NewPage {
+export class PopularPage {
   private posts: any;
   private postsArray: any;
-  constructor(private navCtrl: NavController,public newPosts: NewService) {
+  constructor(private navCtrl: NavController,public trendingPosts: PopularService) {
     this.postsArray = [];
 
-    this.loadnewPosts();
-
-
+    this.loadTrendingPosts();
   }
+
   viewPost(post){
     this.navCtrl.push(PostDetailPage, {
       post: post
     });
   }
 
-  loadnewPosts(){
-    this.newPosts.load()
+  loadTrendingPosts(){
+    this.trendingPosts.load()
       .then(data => {
         this.posts = data;
-        //console.log(JSON.stringify(this.posts));
 
         for (var key in data) {
           //parsing the nested json object
@@ -76,7 +73,6 @@ export class NewPage {
             }
           }//end image formatting
 
-
           console.log(key + " -> " + data[key]);
           console.log("Post: Author -> " + data[key].author);
           console.log("Post: title -> " + JSON.stringify(data[key].root_title));
@@ -87,9 +83,6 @@ export class NewPage {
           console.log("Image 1 (if any): "+ imageArray[1]);
           console.log("Image 2 (if any): "+imageArray[2]);
           console.log("Image 3 (if any): "+imageArray[3]);
-
-
-          //this is basically just reassigning some of the data we got from the rest call into an object array.
 
           this.postsArray.push({
             key: key,
@@ -115,4 +108,3 @@ export class NewPage {
       });//end .then call
   }//end loadTrendingPosts()
 }//end component
-
