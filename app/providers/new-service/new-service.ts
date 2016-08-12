@@ -34,13 +34,13 @@ export class NewService {
 
       case 3:
         this.apiCallQuery = "created/meme";
-        console.log("Leaving life counter set to "+this.apiCallCounter)
+
         break;
 
       case 4:
         this.apiCallQuery = "created/science";
         this.apiCallCounter = 0;
-        console.log("Leaving life counter set to "+this.apiCallCounter)
+        console.log("Resetting counter set to "+this.apiCallCounter);
         break;
 
       default:

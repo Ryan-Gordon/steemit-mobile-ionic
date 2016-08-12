@@ -11,8 +11,10 @@ import {PostDetailPage} from '../../pages/post-detail/post-detail';
 export class AboutPage {
    private posts: any;
    private postsArray: any;
+  apiCallCounter: number;
   constructor(private navCtrl: NavController,public trendingPosts: SteemTrendingService) {
     this.postsArray = [];
+    this.apiCallCounter = 0;
 
     this.loadTrendingPosts();
   }
@@ -22,15 +24,24 @@ export class AboutPage {
     });
   }
 
-  loadTrendingPosts(){
+  loadTrendingPosts() {
+    this.apiCallCounter++;
 
     //optional feature
     // on second or nth call
     //this.postsArray.splice(0,this.postsArray.length);
     //clear entire array of posts and fill again
     // can be done on every nth refresh or every refresh
+    if (this.apiCallCounter % 4 == 0){
+      this.postsArray.splice(0,this.postsArray.length);
+    }
 
-    this.postsArray.splice(0,(this.postsArray.length));
+    /*if (this.apiCallCounter %3 = 0){
+     this.postsArray.splice(0,this.postsArray.length);
+    }
+
+
+     */
   this.trendingPosts.load()
   .then(data => {
     this.posts = data;
@@ -88,7 +99,7 @@ export class AboutPage {
       console.log("Image 3 (if any): "+imageArray[3]);
       */
       //I am using unshift here to place new items to the front of the array
-      this.postsArray.unshift({
+      this.postsArray.push({
           key: key,
           author: data[key].author,
           title: data[key].root_title,
@@ -111,4 +122,15 @@ export class AboutPage {
 
   });//end .then call
   }//end loadTrendingPosts()
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      this.loadTrendingPosts();
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
 }//end component

@@ -18,7 +18,7 @@ import {NewService} from '../../providers/new-service/new-service';
 export class NewPage {
   private posts: any;
   private postsArray: any;
-  constructor(private navCtrl: NavController,public newPosts: NewService) {
+  constructor(private navCtrl: NavController,private newPosts: NewService) {
     this.postsArray = [];
 
     this.loadnewPosts();

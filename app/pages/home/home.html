@@ -1,44 +1,57 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar primary >
     <ion-title>Home</ion-title>
+
   </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="icons" primary>
+      <ion-segment-button value="camera">
+        <ion-icon name="camera"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bookmark">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding class="home">
+<ion-content padding class="home" >
+  <ion-pane primary>
 
 
+  </ion-pane>
 
-    <ion-grid class="home-container">
+  <ion-list no-lines class="primary" class="bg1">
 
-    <ion-row header>
+    <ion-item class="bg1">
+      <ion-checkbox item-left primary></ion-checkbox>
+      <ion-avatar item-left>
 
-      <ion-col class="text-center">
-        [LOGO / HEADER]
-      </ion-col>
+      </ion-avatar>
+      <ion-label>{{steem.asks}}</ion-label>
+    </ion-item>
+    </ion-list>
 
-    </ion-row>
+  <ion-list no-lines class="bg2">
+
+    <ion-item class="bg2">
+      <ion-checkbox item-left primary></ion-checkbox>
+      <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <ion-label>Wifi</ion-label>
+    </ion-item>
+  </ion-list>
 
 
-    <ion-row class="icon-row">
-
-      <ion-col class="text-centre">
-        <button class = "button button-positive">Icon</button>
-        Title
-      </ion-col>
-
-
-
-
-      </ion-row>
-</ion-grid>
-
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>app/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
 </ion-content>
+
+
+<style>
+  .bg1{
+    background:#387ef5;
+  }
+  .bg2{
+    background:red;
+  }
+</style>
