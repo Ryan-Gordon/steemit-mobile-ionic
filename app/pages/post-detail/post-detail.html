@@ -6,24 +6,33 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar primary>
     <ion-title>postDetail</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<p>{{author}}</p>
-<p>{{title}}</p>
-<p>{{body}}</p>
-<p>{{created}}</p>
-
 <ion-content padding>
 
-  <h1>{{author}}</h1>
-  <p>{{title}}</p>
-  <p>{{body}}</p>
-  <p>{{created}}</p>
-  <p>{{imageUrl}}</p>
+ 
+
+  
+
+      <h1>{{title}}</h1>
+        
+      <h2><ion-icon name='person' primary></ion-icon> By {{author}} </h2>
+      <img *ngIf="imageUrl" src="{{imageUrl}}"/>
+      <p>Created: {{created| date:'shortTime'}}</p>
+
+      <!-- Biggest challenge atm, loading the HTML or Markdown and rendering as it would on site -->
+      <p >{{body}}</p>
+      
+      
+
+  
+  
+
+  
 
 </ion-content>
