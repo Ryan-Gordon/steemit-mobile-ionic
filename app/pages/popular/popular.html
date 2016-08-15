@@ -4,7 +4,7 @@
       Hot
     </ion-title>
     <ion-buttons end>
-      <button (click)="loadTrendingPosts()" >
+      <button (click)="loadhotPosts()" >
         <ion-icon name="refresh"></ion-icon>
         refresh
       </button>
@@ -60,4 +60,12 @@
     </ion-row>
   </ion-card>
   <!-- end card -->
+
+   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more posts...">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

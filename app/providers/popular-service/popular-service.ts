@@ -11,32 +11,59 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PopularService {
   data:any;
+  apiCallCounter: number;
+  apiCallQuery: string;
+  queryUrl:string;
 
   constructor(private http: Http) {
     this.load();
   }
   load() {
-
     // don't have the data yet
-    console.log("Starting Promise");
-    return new Promise(resolve => {
-      // We're using Angular HTTP provider to request the data,
-      // then on the response, it'll map the JSON data to a parsed JS object.
-      // Next, we process the data and resolve the promise with the new data.
-      this.http.get('https://api.steemjs.com/getState?path=/hot&scope=content')
-        .map(res => res.json())
-        .subscribe(data => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
+        switch(this.apiCallCounter){
+          case 1:
+            this.apiCallQuery = "hot/steemit";
+            break;
+          case 2:
+            this.apiCallQuery = "hot/introduceyourself";
+            break;
 
+          case 3:
+            this.apiCallQuery = "hot/meme";
+                break;
 
-          this.data = data;
-          console.log("Currently inside the service ");
-          //console.log(JSON.stringify(this.data));
-          resolve(this.data);
-          console.log("Leaving the service \n\n ");
+          case 4:
+            this.apiCallQuery = "hot/science";
+            this.apiCallCounter = 0;
+
+            break;
+
+          default:
+            this.apiCallQuery = "hot";
+            this.apiCallCounter=1;
+
+        }//end swtich statement
+        this.queryUrl = 'https://api.steemjs.com/getState?path=/'+this.apiCallQuery+'&scope=content';
+
+        console.log("Starting Promise");
+        return new Promise(resolve => {
+          // We're using Angular HTTP provider to request the data.
+          // request is coming from fabien's SteemJS restful service
+          // After this call we process and save the post data
+          this.http.get(this.queryUrl)
+            .map(res => res.json())
+            .subscribe(data => {
+              // we've got back the post data now we save it
+              // and and increment the counter so it does not pull the same call
+
+              this.data = data;
+              resolve(this.data);
+              this.apiCallCounter++;
+              
+              console.log(this.apiCallCounter);
+              console.log(" Query URL :"+this.queryUrl);
+            });
         });
-    });
 
 
   }

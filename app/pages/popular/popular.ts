@@ -17,10 +17,11 @@ import {PostDetailPage} from '../../pages/post-detail/post-detail'
 export class PopularPage {
   private posts: any;
   private postsArray: any;
-  constructor(private navCtrl: NavController,public trendingPosts: PopularService) {
+  private apiCallCounter: number;
+  constructor(private navCtrl: NavController,public hotPosts: PopularService) {
     this.postsArray = [];
 
-    this.loadTrendingPosts();
+    this.loadhotPosts();
   }
 
   viewPost(post){
@@ -29,8 +30,18 @@ export class PopularPage {
     });
   }
 
-  loadTrendingPosts(){
-    this.trendingPosts.load()
+  loadhotPosts(){
+    this.apiCallCounter++;
+
+    //optional feature
+    // on second or nth call
+    //this.postsArray.splice(0,this.postsArray.length);
+    //clear entire array of posts and fill again
+    // can be done on every nth refresh or every refresh
+    if (this.apiCallCounter % 4 == 0){
+      this.postsArray.splice(0,this.postsArray.length);
+    }
+    this.hotPosts.load()
       .then(data => {
         this.posts = data;
 
@@ -72,7 +83,7 @@ export class PopularPage {
               thumbnail = null;
             }
           }//end image formatting
-
+          /* Console logs to show the data we are pulling
           console.log(key + " -> " + data[key]);
           console.log("Post: Author -> " + data[key].author);
           console.log("Post: title -> " + JSON.stringify(data[key].root_title));
@@ -83,6 +94,8 @@ export class PopularPage {
           console.log("Image 1 (if any): "+ imageArray[1]);
           console.log("Image 2 (if any): "+imageArray[2]);
           console.log("Image 3 (if any): "+imageArray[3]);
+
+          */
 
           this.postsArray.push({
             key: key,
@@ -106,5 +119,17 @@ export class PopularPage {
 
 
       });//end .then call
-  }//end loadTrendingPosts()
+  }//end loadhotPosts()
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      this.loadhotPosts();
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
 }//end component
+

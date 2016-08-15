@@ -11,7 +11,7 @@ import {PostDetailPage} from '../../pages/post-detail/post-detail';
 export class AboutPage {
    private posts: any;
    private postsArray: any;
-  apiCallCounter: number;
+   private apiCallCounter: number;
   constructor(private navCtrl: NavController,public trendingPosts: SteemTrendingService) {
     this.postsArray = [];
     this.apiCallCounter = 0;
