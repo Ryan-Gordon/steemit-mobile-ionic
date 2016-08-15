@@ -1,0 +1,25 @@
+import {Pipe} from '@angular/core';
+
+@Pipe({
+  name: 'percentChange'
+})
+export class PercentChange {
+  transform(value) {
+    let newValue = 0;
+
+    //Count how many words were passed in
+    if (value <0){
+      newValue = value *100;
+
+
+    }
+    else{
+     newValue = value /100;
+
+
+    }
+
+
+    return newValue;
+  }
+}

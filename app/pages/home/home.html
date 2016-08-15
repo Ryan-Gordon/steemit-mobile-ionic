@@ -1,57 +1,101 @@
 <ion-header>
   <ion-navbar primary >
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button (click)="refreshPrice()" >
+        <ion-icon name="refresh"></ion-icon>
+        refresh
+      </button>
+    </ion-buttons>
 
   </ion-navbar>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="icons" primary>
-      <ion-segment-button value="camera">
-        <ion-icon name="camera"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="bookmark">
-        <ion-icon name="bookmark"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  
 </ion-header>
 
 <ion-content padding class="home" >
-  <ion-pane primary>
 
+  <ion-card >
+  <ion-card-header >
+    
+    STEEM
+        
+     
+  </ion-card-header>
 
-  </ion-pane>
-
-  <ion-list no-lines class="primary" class="bg1">
-
-    <ion-item class="bg1">
-      <ion-checkbox item-left primary></ion-checkbox>
-      <ion-avatar item-left>
-
-      </ion-avatar>
-      <ion-label>{{steem.asks}}</ion-label>
+  <ion-list>
+    <button ion-item>
+      <ion-icon name="bitcoin" item-left primary></ion-icon>
+      BTC Price :{{steem.last}}
+    </button>
+    <ion-item>
+      <ion-icon name="cash" item-left primary></ion-icon>
+      Dollar Price:       {{steemDollarVal |number:'.2'}}
     </ion-item>
-    </ion-list>
 
-  <ion-list no-lines class="bg2">
-
-    <ion-item class="bg2">
-      <ion-checkbox item-left primary></ion-checkbox>
-      <ion-avatar item-left>
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-      </ion-avatar>
-      <ion-label>Wifi</ion-label>
+    <ion-item>
+      <ion-icon name="arrow-round-up" item-left primary></ion-icon>
+      Todays High:       {{steem.high24hr}}
     </ion-item>
+
+    <ion-item>
+      <ion-icon name="arrow-round-down" item-left primary></ion-icon>
+      Todays Low:       {{steem.low24hr}}
+    </ion-item>
+
+    <button ion-item>
+      
+      STEEM on Bittrex
+    </button>
+
+    <button ion-item>
+      
+      STEEM on Poloniex
+    </button>
+
   </ion-list>
+</ion-card>
 
+<ion-card>
+  <ion-card-header>
+    Steem Dollars
+  </ion-card-header>
+
+  <ion-list>
+    <button ion-item>
+      <ion-icon name="bitcoin" item-left primary></ion-icon>
+      BTC Price :{{sbdPrices.last}}
+    </button>
+
+    <!-- sometimes this shows as NaN value; partiularly on iOS -->
+    <ion-item>
+      <ion-icon name="cash" item-left primary></ion-icon>
+      Dollar Price:       {{sbdDollarVal |number:'.2'}}
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="arrow-round-up" item-left primary></ion-icon>
+      Todays High:       {{sbdPrices.high24hr}}
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="arrow-round-down" item-left primary></ion-icon>
+      Todays Low:       {{sbdPrices.low24hr}}
+    </ion-item>
+
+    <button ion-item>
+      
+      STEEM on Bittrex
+    </button>
+
+    <button ion-item>
+      
+      STEEM on Poloniex
+    </button>
+
+  </ion-list>
+</ion-card>
+ 
+  
 
 </ion-content>
 
-
-<style>
-  .bg1{
-    background:#387ef5;
-  }
-  .bg2{
-    background:red;
-  }
-</style>
