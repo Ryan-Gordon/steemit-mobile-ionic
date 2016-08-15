@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, LoadingController} from 'ionic-angular';
 import {SteemPriceService} from '../../providers/steem-price-service/steem-price-service';
 //import {PercentChange} from '../../pipes/percentChangePipe';
 
@@ -17,12 +17,13 @@ export class HomePage {
   private dollarBtc: any;
   private steemDollarVal : number;
   private sbdDollarVal :number;
-  constructor(private navCtrl: NavController, private steemPrices: SteemPriceService) {
+  constructor(private navCtrl: NavController, private steemPrices: SteemPriceService,private loadingCtrl: LoadingController) {
+
     this.steemPriceObject = [];
     this.steem = [];
     this.sbdPrices=[];
-   this.steemDollarVal =0;
-   this.sbdDollarVal =0;
+    this.steemDollarVal =0;
+    this.sbdDollarVal =0;
     this.loadSteem();
     this.loadSbd();
     this.converttoUSD();
@@ -47,7 +48,7 @@ export class HomePage {
       });
   }
   converttoUSD(){
-    
+
     this.steemPrices.btcToUsd()
     .then(data => {
         this.dollarBtc = data;
@@ -63,6 +64,18 @@ export class HomePage {
     this.loadSbd();
     this.converttoUSD();
 
+  }
+  presentLoadingText() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Loading Market data...'
+    });
+
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
   }
 
 

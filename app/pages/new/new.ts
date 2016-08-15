@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController ,Loading, LoadingController} from 'ionic-angular';
 import {PostDetailPage} from '../../pages/post-detail/post-detail';
 import {NewService} from '../../providers/new-service/new-service';
+
 
 
 
@@ -18,7 +19,9 @@ import {NewService} from '../../providers/new-service/new-service';
 export class NewPage {
   private posts: any;
   private postsArray: any;
-  constructor(private navCtrl: NavController,private newPosts: NewService) {
+  constructor(private navCtrl: NavController,private newPosts: NewService, private loadingCtrl: LoadingController) {
+
+    this.presentLoadingText();
     this.postsArray = [];
 
     this.loadnewPosts();
@@ -114,5 +117,17 @@ export class NewPage {
 
       });//end .then call
   }//end loadTrendingPosts()
+  presentLoadingText() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Loading posts, please wait...'
+    });
+
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
+  }
 }//end component
 

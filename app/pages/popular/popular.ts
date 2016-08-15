@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, LoadingController} from 'ionic-angular';
 
 import {PopularService} from '../../providers/popular-service/popular-service';
 import {PostDetailPage} from '../../pages/post-detail/post-detail'
@@ -18,7 +18,8 @@ export class PopularPage {
   private posts: any;
   private postsArray: any;
   private apiCallCounter: number;
-  constructor(private navCtrl: NavController,public hotPosts: PopularService) {
+  constructor(private navCtrl: NavController,private hotPosts: PopularService, private loadingCtrl: LoadingController) {
+    this.presentLoadingText();
     this.postsArray = [];
 
     this.loadhotPosts();
@@ -130,6 +131,18 @@ export class PopularPage {
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
+  }
+  presentLoadingText() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Loading posts, please wait...'
+    });
+
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
   }
 }//end component
 
