@@ -5,10 +5,10 @@ import {PostDetailPage} from '../../pages/post-detail/post-detail';
 
 
 @Component({
-  templateUrl: 'build/pages/about/about.html',
+  templateUrl: 'build/pages/trending/trending.html',
   providers: [SteemTrendingService]
 })
-export class AboutPage {
+export class TrendingPage {
    private posts: any;
    private postsArray: any;
    private apiCallCounter: number;

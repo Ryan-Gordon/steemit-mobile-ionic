@@ -31,7 +31,7 @@ export class PostDetailPage {
     this.replies = this.navParams.get('post').replies;
     this.votes = this.navParams.get('post').votes;
     this.imageUrl = this.navParams.get('post').imgUrl;
-    
+
 
     console.log("\n\n\nReceived these items: ");
     console.log("\n\n Title:"+this.title+" \n\nAuthor: "+this.author+"  \n\nUrl: "+this.url);
@@ -45,8 +45,8 @@ export class PostDetailPage {
     });
   }
    launch() {
-        
-            window.open(this.url);
+
+            window.open("http://steemit.com"+this.url);
     }
 
 }

@@ -78,7 +78,7 @@ export class NewPage {
               thumbnail = null;
             }
           }//end image formatting
-
+          /*
 
           console.log(key + " -> " + data[key]);
           console.log("Post: Author -> " + data[key].author);
@@ -90,7 +90,7 @@ export class NewPage {
           console.log("Image 1 (if any): "+ imageArray[1]);
           console.log("Image 2 (if any): "+imageArray[2]);
           console.log("Image 3 (if any): "+imageArray[3]);
-
+          */
 
           //this is basically just reassigning some of the data we got from the rest call into an object array.
 
